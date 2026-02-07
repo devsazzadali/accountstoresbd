@@ -1,4 +1,4 @@
-import { Coins, Sword, UserCircle, Zap, Palette } from "lucide-react";
+import { Coins, Sword, UserCircle, Zap, Wrench } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface CategoryTabsProps {
@@ -12,7 +12,7 @@ const categories = [
   { id: "items", label: "Items", icon: Sword },
   { id: "accounts", label: "Accounts", icon: UserCircle },
   { id: "boosting", label: "Boosting", icon: Zap },
-  { id: "skins", label: "Skins", icon: Palette },
+  { id: "services", label: "Services", icon: Wrench },
 ];
 
 export const CategoryTabs = ({ 
@@ -21,7 +21,7 @@ export const CategoryTabs = ({
   categoryCounts = {} 
 }: CategoryTabsProps) => {
   return (
-    <div className="flex flex-wrap gap-2 md:gap-3">
+    <div className="flex items-center border-b border-border">
       {categories.map((category) => {
         const isActive = activeCategory === category.id;
         const count = categoryCounts[category.id] || 0;
@@ -32,11 +32,10 @@ export const CategoryTabs = ({
             key={category.id}
             onClick={() => onCategoryChange(category.id)}
             className={cn(
-              "relative flex items-center gap-2 px-4 py-2.5 rounded-full border transition-all",
-              "text-sm font-medium",
+              "relative flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all border-b-2 -mb-px",
               isActive
-                ? "bg-success text-success-foreground border-success"
-                : "bg-card text-muted-foreground border-border hover:border-muted-foreground hover:text-foreground"
+                ? "text-warning border-warning"
+                : "text-muted-foreground border-transparent hover:text-foreground hover:border-muted-foreground"
             )}
           >
             <Icon className="h-4 w-4" />
@@ -44,8 +43,11 @@ export const CategoryTabs = ({
             
             {/* Count badge */}
             {count > 0 && (
-              <span className="badge-count absolute -top-2 -right-2">
-                {count > 99 ? "99+" : count}
+              <span className={cn(
+                "text-xs px-1.5 py-0.5 rounded",
+                isActive ? "bg-warning/20 text-warning" : "bg-muted text-muted-foreground"
+              )}>
+                {count}
               </span>
             )}
           </button>
