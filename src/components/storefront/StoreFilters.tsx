@@ -1,81 +1,79 @@
-import { Search } from "lucide-react";
+import { Search, RotateCcw, ChevronDown, ArrowUp } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 
 interface StoreFiltersProps {
   searchQuery: string;
   onSearchChange: (value: string) => void;
   selectedGame: string;
   onGameChange: (value: string) => void;
-  sortBy: string;
-  onSortChange: (value: string) => void;
+  totalOffers: number;
+  onReset: () => void;
 }
-
-const games = [
-  { id: "all", name: "All Games" },
-  { id: "wow", name: "World of Warcraft" },
-  { id: "lostark", name: "Lost Ark" },
-  { id: "rust", name: "RUST" },
-  { id: "fortnite", name: "Fortnite" },
-  { id: "valorant", name: "Valorant" },
-  { id: "csgo", name: "Counter-Strike 2" },
-  { id: "gta", name: "GTA V Online" },
-];
 
 export const StoreFilters = ({
   searchQuery,
   onSearchChange,
   selectedGame,
   onGameChange,
-  sortBy,
-  onSortChange,
+  totalOffers,
+  onReset,
 }: StoreFiltersProps) => {
   return (
-    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 py-3">
-      {/* Game Filter */}
-      <Select value={selectedGame} onValueChange={onGameChange}>
-        <SelectTrigger className="w-full sm:w-[200px] bg-card border-border">
-          <SelectValue placeholder="Select a game" />
-        </SelectTrigger>
-        <SelectContent className="bg-card border-border">
-          {games.map((game) => (
-            <SelectItem key={game.id} value={game.id}>
-              {game.name}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+    <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 py-4">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+        {/* Search */}
+        <div className="relative flex">
+          <Input
+            type="search"
+            placeholder="Separate words with commas"
+            value={searchQuery}
+            onChange={(e) => onSearchChange(e.target.value)}
+            className="w-full sm:w-[240px] bg-card border-border pr-10"
+          />
+          <Button 
+            size="icon" 
+            variant="ghost" 
+            className="absolute right-0 h-full px-3 text-muted-foreground hover:text-foreground"
+          >
+            <Search className="h-4 w-4" />
+          </Button>
+        </div>
 
-      {/* Search within store */}
-      <div className="relative flex-1">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-        <Input
-          type="search"
-          placeholder="Search within store..."
-          value={searchQuery}
-          onChange={(e) => onSearchChange(e.target.value)}
-          className="pl-10 bg-card border-border"
-        />
+        {/* Game Dropdown */}
+        <button 
+          onClick={() => onGameChange(selectedGame === "all" ? "" : "all")}
+          className="flex items-center justify-between gap-2 px-4 py-2 bg-card border border-border rounded-md text-sm text-muted-foreground hover:border-muted-foreground transition-colors min-w-[160px]"
+        >
+          <span>{selectedGame || "Game"}</span>
+          <ChevronDown className="h-4 w-4" />
+        </button>
       </div>
 
-      {/* Sort */}
-      <Select value={sortBy} onValueChange={onSortChange}>
-        <SelectTrigger className="w-full sm:w-[160px] bg-card border-border">
-          <SelectValue placeholder="Sort by" />
-        </SelectTrigger>
-        <SelectContent className="bg-card border-border">
-          <SelectItem value="newest">Newest First</SelectItem>
-          <SelectItem value="price-low">Price: Low to High</SelectItem>
-          <SelectItem value="price-high">Price: High to Low</SelectItem>
-          <SelectItem value="popular">Most Popular</SelectItem>
-        </SelectContent>
-      </Select>
+      {/* Right side */}
+      <div className="flex items-center gap-4">
+        <span className="text-sm text-foreground">
+          <span className="text-warning font-bold">{totalOffers}</span> Offers found
+        </span>
+        
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={onReset}
+          className="border-border text-muted-foreground hover:text-foreground"
+        >
+          <RotateCcw className="h-3 w-3 mr-1" />
+          Reset
+        </Button>
+        
+        <Button 
+          size="icon" 
+          variant="outline"
+          className="border-border text-muted-foreground hover:text-foreground rounded-full"
+        >
+          <ArrowUp className="h-4 w-4" />
+        </Button>
+      </div>
     </div>
   );
 };
