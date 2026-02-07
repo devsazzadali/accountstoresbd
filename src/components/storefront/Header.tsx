@@ -1,4 +1,4 @@
-import { Search, User, ShoppingCart } from "lucide-react";
+import { Search, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
@@ -6,43 +6,53 @@ import { Link } from "react-router-dom";
 export const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-card">
-      <div className="container flex h-16 items-center justify-between gap-4">
+      <div className="container flex h-14 items-center justify-between gap-4">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-success">
-            <span className="text-lg font-bold text-success-foreground">PA</span>
-          </div>
-          <span className="hidden text-lg font-bold text-foreground sm:inline-block">
-            PlayerAuctions
-          </span>
+        <Link to="/" className="flex items-center gap-2 shrink-0">
+          <span className="text-lg font-bold text-warning">PlayerAuctions</span>
         </Link>
 
         {/* Search */}
-        <div className="flex flex-1 max-w-xl">
-          <div className="relative w-full">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        <div className="flex flex-1 max-w-md">
+          <div className="relative w-full flex">
             <Input
               type="search"
-              placeholder="Search for games, items, accounts..."
-              className="w-full pl-10 bg-background border-border focus:border-link"
+              placeholder="Find a game..."
+              className="w-full bg-card border-border rounded-r-none focus:border-link text-sm h-9"
             />
+            <Button 
+              size="sm" 
+              className="rounded-l-none h-9 px-3 bg-success hover:bg-success/90"
+            >
+              <Search className="h-4 w-4" />
+            </Button>
           </div>
         </div>
 
-        {/* Auth buttons */}
-        <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
-            <ShoppingCart className="h-5 w-5" />
-          </Button>
+        {/* Right side */}
+        <div className="flex items-center gap-3">
+          {/* Language */}
+          <button className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
+            <Globe className="h-4 w-4" />
+            <span className="hidden sm:inline">English</span>
+          </button>
+
+          {/* Auth buttons */}
           <Link to="/auth">
-            <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
-              <User className="h-5 w-5 mr-2" />
-              <span className="hidden sm:inline">Login</span>
+            <Button 
+              variant="outline" 
+              size="sm"
+              className="text-foreground border-border hover:bg-accent h-8"
+            >
+              LOG IN
             </Button>
           </Link>
           <Link to="/auth">
-            <Button className="btn-success hidden sm:inline-flex">
-              Sign Up
+            <Button 
+              size="sm"
+              className="btn-success h-8"
+            >
+              SIGN UP
             </Button>
           </Link>
         </div>
