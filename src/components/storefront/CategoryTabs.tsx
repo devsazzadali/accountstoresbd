@@ -1,34 +1,74 @@
 import { cn } from "@/lib/utils";
 
+interface Category {
+  id: string;
+  name: string;
+  slug: string;
+  icon?: string | null;
+}
+
 interface CategoryTabsProps {
   activeCategory: string;
   onCategoryChange: (category: string) => void;
   categoryCounts?: Record<string, number>;
+  categories?: Category[];
 }
 
-const categories = [
-  { id: "gold", label: "Gold", color: "from-yellow-500 to-yellow-600" },
-  { id: "items", label: "Items", color: "from-pink-500 to-pink-600" },
-  { id: "accounts", label: "Accounts", color: "from-purple-500 to-purple-600" },
-  { id: "boosting", label: "Boosting", color: "from-cyan-500 to-cyan-600" },
-  { id: "topups", label: "Top-ups", color: "from-green-500 to-green-600" },
+const defaultCategories = [
+  { id: "gold", slug: "gold", name: "Gold" },
+  { id: "items", slug: "items", name: "Items" },
+  { id: "accounts", slug: "accounts", name: "Accounts" },
+  { id: "boosting", slug: "boosting", name: "Boosting" },
+  { id: "topups", slug: "topups", name: "Top-ups" },
 ];
 
 export const CategoryTabs = ({ 
   activeCategory, 
   onCategoryChange, 
-  categoryCounts = {} 
+  categoryCounts = {},
+  categories
 }: CategoryTabsProps) => {
+  const displayCategories = categories && categories.length > 0 ? categories : defaultCategories;
+
   return (
     <div className="flex flex-wrap items-center gap-3 py-4">
-      {categories.map((category) => {
-        const isActive = activeCategory === category.id;
-        const count = categoryCounts[category.id] || 0;
+      {/* All category */}
+      <button
+        onClick={() => onCategoryChange("")}
+        className={cn(
+          "relative flex flex-col items-center gap-2 p-4 rounded-lg border-2 transition-all min-w-[100px]",
+          activeCategory === ""
+            ? "border-warning bg-warning/10"
+            : "border-transparent bg-card hover:border-muted-foreground"
+        )}
+      >
+        <div className="w-12 h-12 flex items-center justify-center relative">
+          <svg viewBox="0 0 100 100" className="w-full h-full">
+            <polygon 
+              points="50,5 95,27.5 95,72.5 50,95 5,72.5 5,27.5" 
+              fill="none"
+              stroke="#6b7280"
+              strokeWidth="4"
+            />
+          </svg>
+          <span className="absolute text-lg">📋</span>
+        </div>
+        <span className={cn(
+          "text-sm font-medium",
+          activeCategory === "" ? "text-warning" : "text-muted-foreground"
+        )}>
+          All
+        </span>
+      </button>
+
+      {displayCategories.map((category) => {
+        const isActive = activeCategory === category.slug;
+        const count = categoryCounts[category.slug] || 0;
 
         return (
           <button
             key={category.id}
-            onClick={() => onCategoryChange(category.id)}
+            onClick={() => onCategoryChange(category.slug)}
             className={cn(
               "relative flex flex-col items-center gap-2 p-4 rounded-lg border-2 transition-all min-w-[100px]",
               isActive
@@ -44,31 +84,29 @@ export const CategoryTabs = ({
             )}
             
             {/* Hexagon Icon */}
-            <div className={cn(
-              "w-12 h-12 flex items-center justify-center relative"
-            )}>
+            <div className="w-12 h-12 flex items-center justify-center relative">
               <svg viewBox="0 0 100 100" className="w-full h-full">
                 <defs>
-                  <linearGradient id={`grad-${category.id}`} x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" className={category.color.split(" ")[0].replace("from-", "stop-")} style={{ stopColor: getCategoryColor(category.id).start }} />
-                    <stop offset="100%" style={{ stopColor: getCategoryColor(category.id).end }} />
+                  <linearGradient id={`grad-${category.slug}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style={{ stopColor: getCategoryColor(category.slug).start }} />
+                    <stop offset="100%" style={{ stopColor: getCategoryColor(category.slug).end }} />
                   </linearGradient>
                 </defs>
                 <polygon 
                   points="50,5 95,27.5 95,72.5 50,95 5,72.5 5,27.5" 
                   fill="none"
-                  stroke={`url(#grad-${category.id})`}
+                  stroke={`url(#grad-${category.slug})`}
                   strokeWidth="4"
                 />
               </svg>
-              <span className="absolute text-lg">{getCategoryIcon(category.id)}</span>
+              <span className="absolute text-lg">{getCategoryIcon(category.slug)}</span>
             </div>
             
             <span className={cn(
               "text-sm font-medium",
               isActive ? "text-warning" : "text-muted-foreground"
             )}>
-              {category.label}
+              {category.name}
             </span>
           </button>
         );
@@ -77,8 +115,8 @@ export const CategoryTabs = ({
   );
 };
 
-function getCategoryIcon(id: string): string {
-  switch (id) {
+function getCategoryIcon(slug: string): string {
+  switch (slug) {
     case "gold": return "🪙";
     case "items": return "📦";
     case "accounts": return "👤";
@@ -88,8 +126,8 @@ function getCategoryIcon(id: string): string {
   }
 }
 
-function getCategoryColor(id: string): { start: string; end: string } {
-  switch (id) {
+function getCategoryColor(slug: string): { start: string; end: string } {
+  switch (slug) {
     case "gold": return { start: "#f59e0b", end: "#d97706" };
     case "items": return { start: "#ec4899", end: "#db2777" };
     case "accounts": return { start: "#a855f7", end: "#9333ea" };

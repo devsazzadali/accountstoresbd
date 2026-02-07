@@ -1,6 +1,19 @@
-import { Search, RotateCcw, ChevronDown, ArrowUp } from "lucide-react";
+import { Search, RotateCcw, ArrowUp } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+interface Game {
+  id: string;
+  name: string;
+  slug: string;
+}
 
 interface StoreFiltersProps {
   searchQuery: string;
@@ -9,6 +22,7 @@ interface StoreFiltersProps {
   onGameChange: (value: string) => void;
   totalOffers: number;
   onReset: () => void;
+  games?: Game[];
 }
 
 export const StoreFilters = ({
@@ -18,6 +32,7 @@ export const StoreFilters = ({
   onGameChange,
   totalOffers,
   onReset,
+  games = [],
 }: StoreFiltersProps) => {
   return (
     <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 py-4">
@@ -26,7 +41,7 @@ export const StoreFilters = ({
         <div className="relative flex">
           <Input
             type="search"
-            placeholder="Separate words with commas"
+            placeholder="Search listings..."
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
             className="w-full sm:w-[240px] bg-card border-border pr-10"
@@ -41,13 +56,19 @@ export const StoreFilters = ({
         </div>
 
         {/* Game Dropdown */}
-        <button 
-          onClick={() => onGameChange(selectedGame === "all" ? "" : "all")}
-          className="flex items-center justify-between gap-2 px-4 py-2 bg-card border border-border rounded-md text-sm text-muted-foreground hover:border-muted-foreground transition-colors min-w-[160px]"
-        >
-          <span>{selectedGame || "Game"}</span>
-          <ChevronDown className="h-4 w-4" />
-        </button>
+        <Select value={selectedGame} onValueChange={onGameChange}>
+          <SelectTrigger className="w-full sm:w-[180px] bg-card border-border">
+            <SelectValue placeholder="All Games" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="">All Games</SelectItem>
+            {games.map((game) => (
+              <SelectItem key={game.id} value={game.id}>
+                {game.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       {/* Right side */}
@@ -70,6 +91,7 @@ export const StoreFilters = ({
           size="icon" 
           variant="outline"
           className="border-border text-muted-foreground hover:text-foreground rounded-full"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         >
           <ArrowUp className="h-4 w-4" />
         </Button>
