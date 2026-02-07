@@ -1,56 +1,71 @@
-import { Search, Globe } from "lucide-react";
+import { Search, Globe, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
 
 export const Header = () => {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-card">
+    <header className="sticky top-0 z-50 w-full bg-[hsl(220,20%,8%)] border-b border-border">
       <div className="container flex h-14 items-center justify-between gap-4">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 shrink-0">
-          <span className="text-lg font-bold text-warning">PlayerAuctions</span>
+          {/* Flame icon */}
+          <div className="relative w-8 h-8">
+            <svg viewBox="0 0 32 32" className="w-8 h-8">
+              <defs>
+                <linearGradient id="flameGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#f97316" />
+                  <stop offset="50%" stopColor="#ef4444" />
+                  <stop offset="100%" stopColor="#8b5cf6" />
+                </linearGradient>
+              </defs>
+              <path 
+                d="M16 2C16 2 8 10 8 18c0 4.4 3.6 8 8 8s8-3.6 8-8c0-8-8-16-8-16zm0 22c-2.2 0-4-1.8-4-4 0-2 2-5 4-8 2 3 4 6 4 8 0 2.2-1.8 4-4 4z" 
+                fill="url(#flameGradient)"
+              />
+            </svg>
+          </div>
+          <span className="text-lg font-semibold text-foreground">PlayerAuctions</span>
         </Link>
 
         {/* Search */}
-        <div className="flex flex-1 max-w-md">
+        <div className="flex flex-1 max-w-lg">
           <div className="relative w-full flex">
             <Input
               type="search"
-              placeholder="Find a game..."
-              className="w-full bg-card border-border rounded-r-none focus:border-link text-sm h-9"
+              placeholder="Find your games..."
+              className="w-full bg-[hsl(220,20%,12%)] border-[hsl(220,20%,20%)] rounded-r-none focus:border-link text-sm h-10 placeholder:text-muted-foreground"
             />
             <Button 
               size="sm" 
-              className="rounded-l-none h-9 px-3 bg-success hover:bg-success/90"
+              className="rounded-l-none h-10 px-4 bg-[hsl(220,20%,20%)] hover:bg-[hsl(220,20%,25%)] border-l-0"
             >
-              <Search className="h-4 w-4" />
+              <Search className="h-4 w-4 text-link" />
             </Button>
           </div>
         </div>
 
         {/* Right side */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           {/* Language */}
-          <button className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
+          <button className="flex items-center gap-2 text-sm text-foreground hover:text-link transition-colors">
             <Globe className="h-4 w-4" />
-            <span className="hidden sm:inline">English</span>
+            <span>English</span>
+            <ChevronDown className="h-3 w-3" />
           </button>
 
           {/* Auth buttons */}
           <Link to="/auth">
             <Button 
-              variant="outline" 
-              size="sm"
-              className="text-foreground border-border hover:bg-accent h-8"
+              variant="ghost" 
+              className="text-foreground hover:text-link font-medium"
             >
               LOG IN
             </Button>
           </Link>
           <Link to="/auth">
             <Button 
-              size="sm"
-              className="btn-success h-8"
+              className="bg-foreground text-background hover:bg-foreground/90 font-medium px-6"
             >
               SIGN UP
             </Button>

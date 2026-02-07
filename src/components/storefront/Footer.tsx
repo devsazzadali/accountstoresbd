@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { CreditCard, Apple } from "lucide-react";
 
 export const Footer = () => {
   return (
@@ -7,7 +8,7 @@ export const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
           {/* PlayerAuctions */}
           <div>
-            <h4 className="font-bold text-foreground mb-3 text-sm">PLAYERAUCTIONS</h4>
+            <h4 className="font-bold text-foreground mb-3 text-xs uppercase tracking-wider">PLAYERAUCTIONS</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><Link to="/" className="hover:text-link">About Us</Link></li>
               <li><Link to="/" className="hover:text-link">Contact</Link></li>
@@ -18,7 +19,7 @@ export const Footer = () => {
 
           {/* Support */}
           <div>
-            <h4 className="font-bold text-foreground mb-3 text-sm">SUPPORT</h4>
+            <h4 className="font-bold text-foreground mb-3 text-xs uppercase tracking-wider">SUPPORT</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><Link to="/" className="hover:text-link">FAQ</Link></li>
               <li><Link to="/" className="hover:text-link">Ticket System</Link></li>
@@ -28,7 +29,7 @@ export const Footer = () => {
 
           {/* Legal */}
           <div>
-            <h4 className="font-bold text-foreground mb-3 text-sm">LEGAL</h4>
+            <h4 className="font-bold text-foreground mb-3 text-xs uppercase tracking-wider">LEGAL</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><Link to="/" className="hover:text-link">Privacy Policy</Link></li>
               <li><Link to="/" className="hover:text-link">Terms of Service</Link></li>
@@ -38,7 +39,7 @@ export const Footer = () => {
 
           {/* Resources */}
           <div>
-            <h4 className="font-bold text-foreground mb-3 text-sm">RESOURCES</h4>
+            <h4 className="font-bold text-foreground mb-3 text-xs uppercase tracking-wider">RESOURCES</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><Link to="/" className="hover:text-link">Seller Guide</Link></li>
               <li><Link to="/" className="hover:text-link">Buyer Protection</Link></li>
@@ -48,13 +49,23 @@ export const Footer = () => {
 
           {/* Payment Methods */}
           <div>
-            <h4 className="font-bold text-foreground mb-3 text-sm">PAYMENT METHODS</h4>
+            <h4 className="font-bold text-foreground mb-3 text-xs uppercase tracking-wider">PAYMENT METHODS</h4>
             <div className="flex flex-wrap gap-2">
-              <PaymentIcon name="Visa" />
-              <PaymentIcon name="MC" />
-              <PaymentIcon name="PayPal" />
-              <PaymentIcon name="Apple" />
-              <PaymentIcon name="G Pay" />
+              <PaymentIcon>
+                <CreditCard className="h-4 w-4" />
+              </PaymentIcon>
+              <PaymentIcon>
+                <span className="text-xs font-bold">VISA</span>
+              </PaymentIcon>
+              <PaymentIcon>
+                <span className="text-xs font-bold">MC</span>
+              </PaymentIcon>
+              <PaymentIcon>
+                <Apple className="h-4 w-4" />
+              </PaymentIcon>
+              <PaymentIcon>
+                <span className="text-xs font-bold">G</span>
+              </PaymentIcon>
             </div>
           </div>
         </div>
@@ -66,10 +77,10 @@ export const Footer = () => {
               © 2024 PlayerAuctions. All rights reserved.
             </p>
             <div className="flex items-center gap-4">
-              <SocialIcon name="Twitter" />
-              <SocialIcon name="Discord" />
-              <SocialIcon name="YouTube" />
-              <SocialIcon name="Facebook" />
+              <SocialIcon icon="𝕏" />
+              <SocialIcon icon="📘" />
+              <SocialIcon icon="▶" />
+              <SocialIcon icon="💬" />
             </div>
           </div>
         </div>
@@ -78,14 +89,14 @@ export const Footer = () => {
   );
 };
 
-const PaymentIcon = ({ name }: { name: string }) => (
-  <div className="px-2 py-1 bg-background border border-border rounded text-xs text-muted-foreground">
-    {name}
+const PaymentIcon = ({ children }: { children: React.ReactNode }) => (
+  <div className="w-10 h-6 bg-background border border-border rounded flex items-center justify-center text-muted-foreground">
+    {children}
   </div>
 );
 
-const SocialIcon = ({ name }: { name: string }) => (
-  <button className="text-muted-foreground hover:text-link transition-colors text-sm">
-    {name}
+const SocialIcon = ({ icon }: { icon: string }) => (
+  <button className="w-8 h-8 bg-background border border-border rounded flex items-center justify-center text-muted-foreground hover:text-link transition-colors">
+    {icon}
   </button>
 );
