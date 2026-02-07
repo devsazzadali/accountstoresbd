@@ -1,9 +1,25 @@
-import { Search, Globe, ChevronDown } from "lucide-react";
+import { Search, Globe, ChevronDown, User, LogOut, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export const Header = () => {
+  const { user, isAdmin, signOut } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/');
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full bg-[hsl(220,20%,8%)] border-b border-border">
       <div className="container flex h-14 items-center justify-between gap-4">
@@ -54,22 +70,56 @@ export const Header = () => {
             <ChevronDown className="h-3 w-3" />
           </button>
 
-          {/* Auth buttons */}
-          <Link to="/auth">
-            <Button 
-              variant="ghost" 
-              className="text-foreground hover:text-link font-medium"
-            >
-              LOG IN
-            </Button>
-          </Link>
-          <Link to="/auth">
-            <Button 
-              className="bg-foreground text-background hover:bg-foreground/90 font-medium px-6"
-            >
-              SIGN UP
-            </Button>
-          </Link>
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="text-foreground hover:text-link gap-2">
+                  <User className="h-4 w-4" />
+                  <span className="hidden sm:inline">{user.email?.split('@')[0]}</span>
+                  <ChevronDown className="h-3 w-3" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="bg-card border-border">
+                <DropdownMenuItem asChild>
+                  <Link to="/dashboard" className="gap-2 cursor-pointer">
+                    <User className="h-4 w-4" />
+                    My Dashboard
+                  </Link>
+                </DropdownMenuItem>
+                {isAdmin && (
+                  <DropdownMenuItem asChild>
+                    <Link to="/admin" className="gap-2 cursor-pointer">
+                      <Shield className="h-4 w-4" />
+                      Admin Panel
+                    </Link>
+                  </DropdownMenuItem>
+                )}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleSignOut} className="gap-2 cursor-pointer text-destructive">
+                  <LogOut className="h-4 w-4" />
+                  Sign Out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <>
+              <Link to="/auth">
+                <Button 
+                  variant="ghost" 
+                  className="text-foreground hover:text-link font-medium"
+                >
+                  LOG IN
+                </Button>
+              </Link>
+              <Link to="/auth">
+                <Button 
+                  className="bg-foreground text-background hover:bg-foreground/90 font-medium px-6"
+                >
+                  SIGN UP
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>
