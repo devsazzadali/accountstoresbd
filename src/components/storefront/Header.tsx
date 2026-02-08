@@ -1,8 +1,9 @@
-import { Search, Globe, ChevronDown, User, LogOut, Shield } from "lucide-react";
+import { Search, Globe, ChevronDown, User, LogOut, Shield, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { useCart } from "@/contexts/CartContext";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +14,7 @@ import {
 
 export const Header = () => {
   const { user, isAdmin, signOut } = useAuth();
+  const { totalItems } = useCart();
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
@@ -63,10 +65,27 @@ export const Header = () => {
 
         {/* Right side */}
         <div className="flex items-center gap-4">
+          {/* Shop Link */}
+          <Link to="/shop" className="text-sm font-medium text-foreground hover:text-link transition-colors hidden sm:block">
+            Shop
+          </Link>
+
+          {/* Cart */}
+          <Link to="/cart" className="relative">
+            <Button variant="ghost" size="icon" className="text-foreground hover:text-link">
+              <ShoppingCart className="h-5 w-5" />
+              {totalItems > 0 && (
+                <span className="absolute -top-1 -right-1 bg-seller text-seller-foreground text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                  {totalItems > 99 ? '99+' : totalItems}
+                </span>
+              )}
+            </Button>
+          </Link>
+
           {/* Language */}
-          <button className="flex items-center gap-2 text-sm text-foreground hover:text-link transition-colors">
+          <button className="hidden md:flex items-center gap-2 text-sm text-foreground hover:text-link transition-colors">
             <Globe className="h-4 w-4" />
-            <span>English</span>
+            <span>EN</span>
             <ChevronDown className="h-3 w-3" />
           </button>
 
