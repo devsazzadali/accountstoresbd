@@ -7,21 +7,28 @@ import { useToast } from "@/hooks/use-toast";
 import {
   Header,
   SellerBanner,
-  StorefrontHeader,
-  SellerPerformance,
-  ShopTabs,
+  SellerSidebar,
+  FeaturedOffers,
   CategoryTabs,
-  StoreFilters,
   ProductTable,
   Pagination,
   Footer,
+  GameCards,
   Listing,
 } from "@/components/storefront";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Search } from "lucide-react";
 
 const ITEMS_PER_PAGE = 10;
 
 const Index = () => {
-  const [activeTab, setActiveTab] = useState("browse");
   const [activeCategory, setActiveCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedGame, setSelectedGame] = useState("");
@@ -160,6 +167,16 @@ const Index = () => {
     return counts;
   }, [categoryCounts, categories]);
 
+  // Transform games for GameCards
+  const gameCards = useMemo(() => {
+    if (!games) return [];
+    return games.map(g => ({
+      id: g.id,
+      name: g.name,
+      offers: listings?.filter(l => l.game_id === g.id).length || 0
+    }));
+  }, [games, listings]);
+
   const handleBuyNow = (listing: Listing, quantity: number) => {
     if (!user) {
       toast({
@@ -170,21 +187,12 @@ const Index = () => {
       return;
     }
     
-    // TODO: Implement checkout flow
     console.log("Buy now clicked:", listing, "Quantity:", quantity);
     toast({
       title: "Coming soon!",
       description: "Checkout functionality will be available soon.",
     });
   };
-
-  const handleReset = () => {
-    setSearchQuery("");
-    setSelectedGame("");
-    setActiveCategory("");
-    setCurrentPage(1);
-  };
-
   const handleCategoryChange = (category: string) => {
     setActiveCategory(category);
     setCurrentPage(1);
@@ -195,42 +203,92 @@ const Index = () => {
       <Header />
       <SellerBanner />
       
-      <main className="container py-4 space-y-4 flex-1">
-        <StorefrontHeader />
-        <SellerPerformance />
-        
-        <div className="bg-card border border-border rounded-lg overflow-hidden">
-          <ShopTabs activeTab={activeTab} onTabChange={setActiveTab} />
+      <main className="container py-6 flex-1">
+        {/* Two Column Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-6">
+          {/* Left Sidebar - Seller Info */}
+          <aside className="order-2 lg:order-1">
+            <SellerSidebar />
+          </aside>
           
-          <div className="p-4">
-            <CategoryTabs
-              activeCategory={activeCategory}
-              onCategoryChange={handleCategoryChange}
-              categoryCounts={tabCategoryCounts}
-              categories={categories}
-            />
+          {/* Right Content - Products */}
+          <div className="order-1 lg:order-2 space-y-6">
+            {/* Featured Offers */}
+            <FeaturedOffers />
             
-            <StoreFilters
-              searchQuery={searchQuery}
-              onSearchChange={(q) => { setSearchQuery(q); setCurrentPage(1); }}
-              selectedGame={selectedGame}
-              onGameChange={(g) => { setSelectedGame(g); setCurrentPage(1); }}
-              totalOffers={transformedListings.length}
-              onReset={handleReset}
-              games={games}
-            />
-            
-            <ProductTable
-              listings={paginatedListings}
-              isLoading={isLoading}
-              onBuyNow={handleBuyNow}
-            />
-            
-            <Pagination 
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={setCurrentPage}
-            />
+            {/* All Services Section */}
+            <div className="bg-card border border-border rounded-lg overflow-hidden">
+              <div className="p-4 border-b border-border">
+                <h2 className="text-xl font-bold text-foreground">All services</h2>
+              </div>
+              
+              {/* Category Tabs */}
+              <div className="border-b border-border">
+                <CategoryTabs
+                  activeCategory={activeCategory}
+                  onCategoryChange={handleCategoryChange}
+                  categoryCounts={tabCategoryCounts}
+                  categories={categories}
+                />
+              </div>
+              
+              {/* Search and Filter Row */}
+              <div className="p-4 border-b border-border">
+                <div className="flex flex-col md:flex-row gap-4">
+                  {/* Search Input */}
+                  <div className="relative flex-1">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      placeholder={`Find all brands in ${activeCategory || 'All Categories'}`}
+                      value={searchQuery}
+                      onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
+                      className="pl-9"
+                    />
+                  </div>
+                  
+                  {/* Sort Select */}
+                  <Select defaultValue="all">
+                    <SelectTrigger className="w-full md:w-[180px]">
+                      <SelectValue placeholder="All" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All</SelectItem>
+                      <SelectItem value="newest">Newest</SelectItem>
+                      <SelectItem value="popular">Most Popular</SelectItem>
+                      <SelectItem value="price-low">Price: Low to High</SelectItem>
+                      <SelectItem value="price-high">Price: High to Low</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              
+              {/* Game Cards */}
+              <div className="p-4 border-b border-border">
+                <GameCards 
+                  games={gameCards}
+                  selectedGame={selectedGame}
+                  onGameSelect={(g) => { 
+                    setSelectedGame(g === selectedGame ? "" : g); 
+                    setCurrentPage(1); 
+                  }}
+                />
+              </div>
+              
+              {/* Products */}
+              <div className="p-4">
+                <ProductTable
+                  listings={paginatedListings}
+                  isLoading={isLoading}
+                  onBuyNow={handleBuyNow}
+                />
+                
+                <Pagination 
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={setCurrentPage}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </main>

@@ -8,4 +8,7 @@ export { StoreFilters } from "./StoreFilters";
 export { ProductTable } from "./ProductTable";
 export { Pagination } from "./Pagination";
 export { Footer } from "./Footer";
+export { SellerSidebar } from "./SellerSidebar";
+export { FeaturedOffers } from "./FeaturedOffers";
+export { GameCards } from "./GameCards";
 export type { Listing } from "./ProductTable";
