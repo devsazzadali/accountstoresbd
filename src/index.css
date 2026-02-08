@@ -10,91 +10,69 @@
 
 @layer base {
   :root {
-    /* Core backgrounds */
-    --background: 220 20% 3%; /* #05070a */
-    --foreground: 210 33% 93%; /* #e6edf3 */
+    /* Core backgrounds - Light theme */
+    --background: 0 0% 100%; /* white */
+    --foreground: 220 20% 10%; /* near black */
 
     /* Card/Component backgrounds */
-    --card: 215 28% 7%; /* #0d1117 */
-    --card-foreground: 210 33% 93%;
+    --card: 0 0% 98%; /* very light gray */
+    --card-foreground: 220 20% 10%;
 
-    --popover: 215 28% 7%;
-    --popover-foreground: 210 33% 93%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 10%;
 
-    /* Primary - Dark theme primary */
-    --primary: 210 33% 93%;
-    --primary-foreground: 220 20% 3%;
+    /* Primary - Light theme primary */
+    --primary: 220 20% 10%;
+    --primary-foreground: 0 0% 100%;
 
     /* Secondary - Muted elements */
-    --secondary: 215 14% 14%; /* #21262d border color as bg */
-    --secondary-foreground: 210 33% 93%;
+    --secondary: 220 14% 96%; /* light gray */
+    --secondary-foreground: 220 20% 10%;
 
     /* Muted text */
-    --muted: 215 14% 14%;
-    --muted-foreground: 215 14% 57%; /* #8b949e */
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 10% 45%; /* medium gray */
 
     /* Accent - Hover states */
-    --accent: 215 28% 11%; /* #161b22 hover */
-    --accent-foreground: 210 33% 93%;
+    --accent: 220 14% 93%; /* light hover */
+    --accent-foreground: 220 20% 10%;
 
     /* Destructive */
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 33% 93%;
+    --destructive-foreground: 0 0% 100%;
 
     /* Action colors */
     --success: 131 41% 46%; /* #2ea043 green buttons */
     --success-foreground: 0 0% 100%;
     
-    --warning: 37 87% 63%; /* #f0ad4e gold/stars */
-    --warning-foreground: 220 20% 3%;
+    --warning: 37 87% 50%; /* gold/stars - slightly darker for light bg */
+    --warning-foreground: 220 20% 10%;
 
     /* Seller banner red */
     --seller-primary: 0 72% 51%; /* Red accent */
     --seller-primary-foreground: 0 0% 100%;
 
     /* Blue link/hover */
-    --link: 212 92% 67%; /* #58a6ff */
+    --link: 212 80% 50%; /* darker blue for light bg */
 
     /* Borders */
-    --border: 215 14% 17%; /* #21262d */
-    --input: 215 14% 17%;
-    --ring: 212 92% 67%;
+    --border: 220 14% 90%; /* light border */
+    --input: 220 14% 90%;
+    --ring: 212 80% 50%;
 
     --radius: 0.5rem;
 
-    /* Sidebar (using same dark theme) */
-    --sidebar-background: 215 28% 7%;
-    --sidebar-foreground: 210 33% 93%;
-    --sidebar-primary: 210 33% 93%;
-    --sidebar-primary-foreground: 220 20% 3%;
-    --sidebar-accent: 215 28% 11%;
-    --sidebar-accent-foreground: 210 33% 93%;
-    --sidebar-border: 215 14% 17%;
-    --sidebar-ring: 212 92% 67%;
+    /* Sidebar */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 220 20% 10%;
+    --sidebar-primary: 220 20% 10%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 14% 93%;
+    --sidebar-accent-foreground: 220 20% 10%;
+    --sidebar-border: 220 14% 90%;
+    --sidebar-ring: 212 80% 50%;
   }
 
-  /* No separate dark mode - app is always dark */
-  .dark {
-    --background: 220 20% 3%;
-    --foreground: 210 33% 93%;
-    --card: 215 28% 7%;
-    --card-foreground: 210 33% 93%;
-    --popover: 215 28% 7%;
-    --popover-foreground: 210 33% 93%;
-    --primary: 210 33% 93%;
-    --primary-foreground: 220 20% 3%;
-    --secondary: 215 14% 14%;
-    --secondary-foreground: 210 33% 93%;
-    --muted: 215 14% 14%;
-    --muted-foreground: 215 14% 57%;
-    --accent: 215 28% 11%;
-    --accent-foreground: 210 33% 93%;
-    --destructive: 0 62% 30%;
-    --destructive-foreground: 210 33% 93%;
-    --border: 215 14% 17%;
-    --input: 215 14% 17%;
-    --ring: 212 92% 67%;
-  }
 }
 
 @layer base {

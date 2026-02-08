@@ -96,7 +96,7 @@ export const StorefrontHeader = () => {
       </div>
 
       {/* Why Us Section */}
-      <div className="border-t border-border p-6 bg-[hsl(220,20%,6%)]">
+      <div className="border-t border-border p-6 bg-secondary">
         <h3 className="text-lg font-bold text-foreground mb-4">WHY US?</h3>
         <ol className="space-y-2 text-sm text-muted-foreground">
           <li>1. TOP company on various websites Selling / Boosting game accounts with more than 11 years of experience.</li>
