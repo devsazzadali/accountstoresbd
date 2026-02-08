@@ -21,7 +21,7 @@ export const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-[hsl(220,20%,8%)] border-b border-border">
+    <header className="sticky top-0 z-50 w-full bg-background border-b border-border">
       <div className="container flex h-14 items-center justify-between gap-4">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 shrink-0">
@@ -50,11 +50,11 @@ export const Header = () => {
             <Input
               type="search"
               placeholder="Find your games..."
-              className="w-full bg-[hsl(220,20%,12%)] border-[hsl(220,20%,20%)] rounded-r-none focus:border-link text-sm h-10 placeholder:text-muted-foreground"
+              className="w-full bg-secondary border-border rounded-r-none focus:border-link text-sm h-10 placeholder:text-muted-foreground"
             />
             <Button 
               size="sm" 
-              className="rounded-l-none h-10 px-4 bg-[hsl(220,20%,20%)] hover:bg-[hsl(220,20%,25%)] border-l-0"
+              className="rounded-l-none h-10 px-4 bg-secondary hover:bg-accent border-l-0"
             >
               <Search className="h-4 w-4 text-link" />
             </Button>
