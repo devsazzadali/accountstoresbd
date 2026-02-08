@@ -56,12 +56,12 @@ export const StoreFilters = ({
         </div>
 
         {/* Game Dropdown */}
-        <Select value={selectedGame} onValueChange={onGameChange}>
+        <Select value={selectedGame || "all"} onValueChange={(value) => onGameChange(value === "all" ? "" : value)}>
           <SelectTrigger className="w-full sm:w-[180px] bg-card border-border">
             <SelectValue placeholder="All Games" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Games</SelectItem>
+            <SelectItem value="all">All Games</SelectItem>
             {games.map((game) => (
               <SelectItem key={game.id} value={game.id}>
                 {game.name}
