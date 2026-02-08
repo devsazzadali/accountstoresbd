@@ -287,11 +287,30 @@ const ProductCard = ({ listing }: ProductCardProps) => {
   return (
     <Link to={`/product/${listing.id}`}>
       <Card className="bg-card border-border overflow-hidden hover:border-seller transition-colors cursor-pointer h-full flex flex-col">
-        <div className="p-4 flex-1 flex flex-col">
-          <div className="flex items-start justify-between gap-2 mb-2">
-            <span className="text-xs text-muted-foreground bg-secondary px-2 py-0.5 rounded">
+        {/* Product Image */}
+        <div className="aspect-video bg-muted relative overflow-hidden">
+          {listing.image_url ? (
+            <img 
+              src={listing.image_url} 
+              alt={listing.title}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-muted to-secondary">
+              <span className="text-4xl font-bold text-muted-foreground/30">
+                {listing.game?.name?.charAt(0) || '?'}
+              </span>
+            </div>
+          )}
+          <div className="absolute top-2 left-2">
+            <span className="text-xs text-white bg-black/60 px-2 py-0.5 rounded">
               {listing.game?.name || 'Unknown'}
             </span>
+          </div>
+        </div>
+        
+        <div className="p-4 flex-1 flex flex-col">
+          <div className="flex items-start justify-between gap-2 mb-2">
             <div className="flex items-center gap-1 text-xs text-success">
               <ThumbsUp className="h-3 w-3" />
               99%
@@ -332,7 +351,24 @@ const ProductListItem = ({ listing }: ProductCardProps) => {
   return (
     <Link to={`/product/${listing.id}`}>
       <Card className="bg-card border-border p-4 hover:border-seller transition-colors cursor-pointer">
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center gap-4">
+          {/* Thumbnail */}
+          <div className="w-20 h-20 rounded-lg bg-muted overflow-hidden shrink-0">
+            {listing.image_url ? (
+              <img 
+                src={listing.image_url} 
+                alt={listing.title}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-muted to-secondary">
+                <span className="text-2xl font-bold text-muted-foreground/30">
+                  {listing.game?.name?.charAt(0) || '?'}
+                </span>
+              </div>
+            )}
+          </div>
+          
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
               <span className="text-xs text-muted-foreground bg-secondary px-2 py-0.5 rounded">

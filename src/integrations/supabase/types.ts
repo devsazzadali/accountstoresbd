@@ -73,6 +73,7 @@ export type Database = {
           details: string | null
           game_id: string | null
           id: string
+          image_url: string | null
           is_active: boolean
           price: number
           server: string | null
@@ -87,6 +88,7 @@ export type Database = {
           details?: string | null
           game_id?: string | null
           id?: string
+          image_url?: string | null
           is_active?: boolean
           price: number
           server?: string | null
@@ -101,6 +103,7 @@ export type Database = {
           details?: string | null
           game_id?: string | null
           id?: string
+          image_url?: string | null
           is_active?: boolean
           price?: number
           server?: string | null

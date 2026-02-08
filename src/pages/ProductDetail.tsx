@@ -121,6 +121,25 @@ const ProductDetail = () => {
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8">
             {/* Left - Product Info */}
             <div className="space-y-6">
+              {/* Product Image */}
+              <Card className="bg-card border-border overflow-hidden">
+                <div className="aspect-video bg-muted relative">
+                  {listing.image_url ? (
+                    <img 
+                      src={listing.image_url} 
+                      alt={listing.title}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-muted to-secondary">
+                      <span className="text-6xl font-bold text-muted-foreground/30">
+                        {listing.game?.name?.charAt(0) || '?'}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </Card>
+
               <Card className="bg-card border-border p-6">
                 <div className="flex items-start justify-between gap-4 mb-4">
                   <div>
