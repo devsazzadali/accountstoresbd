@@ -32,7 +32,7 @@ export const SellerBanner = () => {
       </div>
       
       {/* Stats Banner - Dark background with red skewed badges */}
-      <div className="py-4 bg-[hsl(218,30%,10%)]">
+      <div className="py-4 bg-[hsl(218,30%,12%)]">
         <div className="container">
           {/* First row - red badges */}
           <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 mb-2">
@@ -47,7 +47,7 @@ export const SellerBanner = () => {
                 <span className="inline-block skew-x-12">10+</span>
               </div>
             </div>
-            <span className="text-foreground font-bold tracking-wide text-sm">YEARS IN ACCOUNT SELLING / BOOSTING</span>
+            <span className="text-white font-bold tracking-wide text-sm">YEARS IN ACCOUNT SELLING / BOOSTING</span>
           </div>
         </div>
       </div>
@@ -67,6 +67,6 @@ const SkewedBadge = ({ value, label }: SkewedBadgeProps) => (
         <span className="inline-block skew-x-12">{value}</span>
       </div>
     </div>
-    <span className="text-foreground font-bold tracking-wide text-sm">{label}</span>
+    <span className="text-white font-bold tracking-wide text-sm">{label}</span>
   </div>
 );
