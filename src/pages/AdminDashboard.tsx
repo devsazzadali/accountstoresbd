@@ -258,7 +258,7 @@ export default function AdminDashboard() {
                       <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
                           <Label>Game</Label>
-                          <Select value={form.game_id} onValueChange={(v) => setForm({ ...form, game_id: v })}>
+                          <Select value={form.game_id || undefined} onValueChange={(v) => setForm({ ...form, game_id: v })}>
                             <SelectTrigger className="bg-background border-border">
                               <SelectValue placeholder="Select game" />
                             </SelectTrigger>
@@ -271,7 +271,7 @@ export default function AdminDashboard() {
                         </div>
                         <div className="space-y-2">
                           <Label>Category</Label>
-                          <Select value={form.category_id} onValueChange={(v) => setForm({ ...form, category_id: v })}>
+                          <Select value={form.category_id || undefined} onValueChange={(v) => setForm({ ...form, category_id: v })}>
                             <SelectTrigger className="bg-background border-border">
                               <SelectValue placeholder="Select category" />
                             </SelectTrigger>
